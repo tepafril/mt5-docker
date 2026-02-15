@@ -1,6 +1,3 @@
-wine_executable="${wine_executable:-wine}"
-wine_python="${wine_python:-C:\\Program Files (x86)\\Python39-32\\python.exe}"
-
 sudo apt update
 sudo apt upgrade -y
 sudo apt install -y ca-certificates curl gnupg lsb-release
