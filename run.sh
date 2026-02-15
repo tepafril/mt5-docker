@@ -19,6 +19,13 @@ docker exec -it mt5 bash -c "chmod +x /Metatrader/start.sh"
 echo -e "${GREEN}[5/7] Restarting container to run the new start script...${NC}"
 docker restart mt5
 
+echo -e "${GREEN}Waiting for container (30s countdown)...${NC}"
+for i in $(seq 30 -1 1); do
+  echo -ne "\r  ${GREEN}$i${NC} seconds remaining  "
+  sleep 1
+done
+echo -ne "\r                              \r"
+
 echo -e "${GREEN}[6/7] Installing numpy<2 for MetaTrader5 compatibility (Wine Python)...${NC}"
 docker exec -it mt5 bash -c "su abc -c 'wine \"C:\Program Files (x86)\Python39-32\python.exe\" -m pip uninstall numpy -y'"
 docker exec -it mt5 bash -c "su abc -c 'wine \"C:\Program Files (x86)\Python39-32\python.exe\" -m pip install \"numpy<2\"'"
