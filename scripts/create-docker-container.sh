@@ -1,0 +1,44 @@
+mkdir MT5
+cd MT5
+
+cat > docker-compose.yaml <<EOF
+services:
+  mt5:
+    image: gmag11/metatrader5_vnc
+    container_name: mt5
+    volumes:
+      - ./config:/config
+    ports:
+      - 3000:3000
+      - 8001:8001
+    environment:
+      - CUSTOM_USER=tepafril
+      - PASSWORD=316619AAbbcc**!!
+    restart: unless-stopped
+    networks:
+      - mt5_network
+
+  postgres:
+    image: postgres:15
+    container_name: mt5_postgres
+    environment:
+      - POSTGRES_USER=tepafril
+      - POSTGRES_PASSWORD=316619AAbbcc**!!
+      - POSTGRES_DB=mt5_data
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    restart: unless-stopped
+    networks:
+      - mt5_network
+
+networks:
+  mt5_network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+EOF
+
+docker compose up -d
