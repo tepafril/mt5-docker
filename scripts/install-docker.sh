@@ -19,8 +19,7 @@ docker compose version
 sudo usermod -aG docker $USER
 newgrp docker
 
-mkdir ../mt5
-cd ..
+mkdir -p mt5
 cp docker-compose.yaml mt5/docker-compose.yaml
 
 cd mt5
