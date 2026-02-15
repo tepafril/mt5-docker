@@ -9,15 +9,20 @@ cp docker-compose.yaml mt5/docker-compose.yaml
 
 echo -e "${GREEN}[3/7] Starting containers in detached mode...${NC}"
 cd mt5
-docker compose up -d
-docker logs -f mt5
 
-echo -e "${GREEN}Waiting for container (30s countdown)...${NC}"
-for i in $(seq 30 -1 1); do
-  echo -ne "\r  ${GREEN}$i${NC} seconds remaining  "
-  sleep 1
-done
-echo -ne "\r                              \r"
+if docker ps -q -f "name=^/mt5$" -f "status=running" | grep -q .; then
+  echo -e "  ${GREEN}Container mt5 is already running.${NC}"
+else
+  docker compose up -d
+  docker logs -f mt5
+fi
+
+# echo -e "${GREEN}Waiting for container (30s countdown)...${NC}"
+# for i in $(seq 120 -1 1); do
+#   echo -ne "\r  ${GREEN}$i${NC} seconds remaining  "
+#   sleep 1
+# done
+# echo -ne "\r                              \r"
 
 cd ..
 
