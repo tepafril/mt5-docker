@@ -38,11 +38,11 @@ docker compose version
 echo -e "${GREEN}Adding current user to docker group...${NC}"
 sudo usermod -aG docker $USER
 
-echo -e "${GREEN}Applying new group (log out and back in if docker still requires sudo)...${NC}"
-newgrp docker
-
 echo -e "${GREEN}Removing all containers, images, and volumes...${NC}"
 docker compose down -v --rmi all
 
 echo -e "${GREEN}Pruning all build cache...${NC}"
 docker builder prune -a -f
+
+echo -e "${GREEN}Applying new group (log out and back in if docker still requires sudo)...${NC}"
+newgrp docker
