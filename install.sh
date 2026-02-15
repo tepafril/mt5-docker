@@ -1,30 +1,42 @@
-# Refresh package lists
+GREEN='\033[0;32m'
+NC='\033[0m' # No Color
+
+echo -e "${GREEN}[1/10] Refreshing package lists...${NC}"
 sudo apt update
-# Upgrade all installed packages non-interactively
+
+echo -e "${GREEN}[2/10] Upgrading installed packages...${NC}"
 sudo apt upgrade -y
-# Install dependencies for adding Docker’s APT repo
+
+echo -e "${GREEN}[3/10] Installing dependencies for Docker APT repo...${NC}"
 sudo apt install -y ca-certificates curl gnupg lsb-release
-# Create directory for APT keyrings
+
+echo -e "${GREEN}[4/10] Creating APT keyrings directory...${NC}"
 sudo mkdir -p /etc/apt/keyrings
-# Download Docker’s GPG key and save it for APT
+
+echo -e "${GREEN}[5/10] Downloading Docker GPG key...${NC}"
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
-# Add Docker’s official APT repository for this Ubuntu release
+
+echo -e "${GREEN}[6/10] Adding Docker official APT repository...${NC}"
 echo \
   "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
   $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-# Refresh package lists again to include Docker packages
+
+echo -e "${GREEN}[7/10] Refreshing package lists (Docker packages)...${NC}"
 sudo apt update
-# Install Docker Engine, CLI, containerd, buildx, and Compose plugin
+
+echo -e "${GREEN}[8/10] Installing Docker Engine, CLI, containerd, buildx, and Compose plugin...${NC}"
 sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-# Start Docker on boot
+
+echo -e "${GREEN}[9/10] Enabling and starting Docker...${NC}"
 sudo systemctl enable docker
-# Start Docker now
 sudo systemctl start docker
-# Confirm Docker and Compose are installed
+
+echo -e "${GREEN}[10/10] Verifying Docker and Compose...${NC}"
 docker --version
 docker compose version
 
-# Add current user to docker group so you can run docker without sudo
+echo -e "${GREEN}Adding current user to docker group...${NC}"
 sudo usermod -aG docker $USER
-# Apply new group in this shell (or log out and back in)
+
+echo -e "${GREEN}Applying new group (log out and back in if docker still requires sudo)...${NC}"
 newgrp docker
