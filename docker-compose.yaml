@@ -15,6 +15,9 @@ services:
       - mt5_network
 
   postgres:
+    build:
+      context: .
+      dockerfile: Dockerfile.mt5
     image: postgres:15
     container_name: mt5_postgres
     environment:
