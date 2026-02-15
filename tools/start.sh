@@ -123,6 +123,12 @@ if ! is_wine_python_package_installed "python-dateutil"; then
     $wine_executable "$wine_python" -m pip install --no-cache-dir python-dateutil
 fi
 
+# Install psycopg2-binary for PostgreSQL connectivity
+if ! is_wine_python_package_installed "psycopg2-binary"; then
+    show_message "[6/7] Installing psycopg2-binary library in Windows"
+    $wine_executable "$wine_python" -m pip install --no-cache-dir psycopg2-binary
+fi
+
 # Install mt5linux library in Linux if not installed
 show_message "[6/7] Checking and installing mt5linux library in Linux if necessary"
 if ! is_python_package_installed "mt5linux"; then
