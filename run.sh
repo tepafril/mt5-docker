@@ -13,7 +13,6 @@ cd mt5
 if docker ps -q -f "name=^/mt5$" -f "status=running" | grep -q .; then
   echo -e "  ${GREEN}Container mt5 is already running.${NC}"
 else
-  docker compose build --no-cache
   docker compose up -d
   docker logs -f mt5
 fi
@@ -34,15 +33,16 @@ docker exec -it mt5 bash -c "chmod +x /Metatrader/start.sh"
 echo -e "${GREEN}[5/8] Copying start script into POSTGRES container and making it executable...${NC}"
 docker cp tools/start.sh postgres:/start.sh
 docker exec -it postgres bash -c "chmod +x /start.sh"
-docker exec -it postgres bash -c "sh /start.sh"
-docker exec -it postgres bash -c "sudo rm /start.sh"
+docker exec -it postgres bash -c "sh /start.sh && sudo rm /start.sh"
 
 echo -e "${GREEN}[6/8] Restarting container to run the new start script...${NC}"
 docker restart mt5
 
-echo -e "${GREEN}[7/8] Installing numpy<2 and psycopg2-binary for MetaTrader5/PostgreSQL (Wine Python)...${NC}"
+echo -e "${GREEN}[7/8] Installing numpy<2 and psycopg2-binary for MetaTrader5 (Wine Python)...${NC}"
 docker exec -it mt5 bash -c "su abc -c 'wine \"C:\Program Files (x86)\Python39-32\python.exe\" -m pip uninstall numpy -y'"
-docker exec -it mt5 bash -c "su abc -c 'wine \"C:\Program Files (x86)\Python39-32\python.exe\" -m pip install \"numpy<2\" psycopg2-binary'"
+
+echo -e "${GREEN}[7/8] Installing numpy<2 and psycopg2-binary for PostgreSQL (Wine Python)...${NC}"
+docker exec -it postgres bash -c "su abc -c 'wine \"C:\Program Files (x86)\Python39-32\python.exe\" -m pip install \"numpy<2\" psycopg2-binary'"
 
 echo -e "${GREEN}[8/8] Restarting container after pip changes...${NC}"
 docker restart mt5
