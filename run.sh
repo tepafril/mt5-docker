@@ -30,10 +30,10 @@ echo -e "${GREEN}[4/8] Copying start script into MT5 container and making it exe
 docker cp tools/start.sh mt5:/Metatrader/start.sh
 docker exec -it mt5 bash -c "chmod +x /Metatrader/start.sh"
 
-echo -e "${GREEN}[5/8] Copying start script into POSTGRES container and making it executable...${NC}"
-docker cp tools/start.sh postgres:/start.sh
-docker exec -it postgres bash -c "chmod +x /start.sh"
-docker exec -it postgres bash -c "sh /start.sh && sudo rm /start.sh"
+# echo -e "${GREEN}[5/8] Copying start script into POSTGRES container and making it executable...${NC}"
+# docker cp tools/start.sh postgres:/start.sh
+# docker exec -it postgres bash -c "chmod +x /start.sh"
+# docker exec -it postgres bash -c "sh /start.sh && sudo rm /start.sh"
 
 echo -e "${GREEN}[6/8] Restarting container to run the new start script...${NC}"
 docker restart mt5
@@ -42,10 +42,10 @@ echo -e "${GREEN}[7/8] Installing numpy<2 and psycopg2-binary for MetaTrader5 (W
 docker exec -it mt5 bash -c "su abc -c 'wine \"C:\Program Files (x86)\Python39-32\python.exe\" -m pip uninstall numpy -y'"
 
 echo -e "${GREEN}[7/8] Installing numpy<2 and psycopg2-binary for PostgreSQL (Wine Python)...${NC}"
-docker exec -it postgres bash -c "su abc -c 'wine \"C:\Program Files (x86)\Python39-32\python.exe\" -m pip install \"numpy<2\" psycopg2-binary'"
+# docker exec -it postgres bash -c "su abc -c 'wine \"C:\Program Files (x86)\Python39-32\python.exe\" -m pip install \"numpy<2\" psycopg2-binary'"
 
 echo -e "${GREEN}[8/8] Restarting container after pip changes...${NC}"
 docker restart mt5
 
 echo -e "${GREEN}Streaming container logs (Ctrl+C to stop)...${NC}"
-docker logs -f postgres
+docker logs -f mt5
