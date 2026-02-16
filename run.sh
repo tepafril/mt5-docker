@@ -13,6 +13,7 @@ cd mt5
 if docker ps -q -f "name=^/mt5$" -f "status=running" | grep -q .; then
   echo -e "  ${GREEN}Container mt5 is already running.${NC}"
 else
+  docker compose build --no-cache
   docker compose up -d
   docker logs -f mt5
 fi
