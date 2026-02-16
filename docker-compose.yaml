@@ -1,3 +1,4 @@
+version: '3'
 services:
   mt5:
     image: gmag11/metatrader5_vnc
@@ -8,26 +9,22 @@ services:
       - 3000:3000
       - 8001:8001
     environment:
-      - CUSTOM_USER=tepafril
-      - PASSWORD=316619AAbbcc**!!
+      - CUSTOM_USER=<Choose a user>
+      - PASSWORD=<Choose a secure password>
     depends_on:
       - postgres
-    networks:
-      - mt5_network
+
   postgres:
     image: postgres:16-alpine
+    container_name: mt5_postgres
     environment:
-      POSTGRES_USER: tepafril
-      POSTGRES_PASSWORD: 316619AAbbcc**!!
-      POSTGRES_DB: mt5_data
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=<Choose a secure password>
+      - POSTGRES_DB=mt5_database
     volumes:
       - postgres_data:/var/lib/postgresql/data
-    networks:
-      - mt5_network
+    ports:
+      - 5432:5432
 
 volumes:
   postgres_data:
-
-networks:
-  mt5_network:
-    driver: bridge
