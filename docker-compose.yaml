@@ -1,23 +1,40 @@
 services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: postgres
+    environment:
+      - POSTGRES_USER=tepafril
+      - POSTGRES_PASSWORD=316619AAbbcc**!!
+      - POSTGRES_DB=mt5_data
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    restart: unless-stopped
+    networks:
+      - mt5_network
+
   mt5:
     build:
       context: .
       dockerfile: Dockerfile.mt5
-    image: gmag11/metatrader5_vnc
+    image: mt5-postgres
     container_name: mt5
+    depends_on:
+      - postgres
     volumes:
       - ./config:/config
-      - postgres_data:/var/lib/postgresql/data
     ports:
       - 3000:3000
       - 8001:8001
-      - 5432:5432
     environment:
       - CUSTOM_USER=tepafril
       - PASSWORD=316619AAbbcc**!!
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=5432
+      - POSTGRES_DB=mt5_data
       - POSTGRES_USER=tepafril
       - POSTGRES_PASSWORD=316619AAbbcc**!!
-      - POSTGRES_DB=mt5_data
     restart: unless-stopped
     networks:
       - mt5_network

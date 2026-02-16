@@ -1,14 +1,15 @@
+import os
 import psycopg2
 from mt5linux import MetaTrader5
 import pandas as pd
 
-# Connect to PostgreSQL
+# Connect to PostgreSQL (use POSTGRES_HOST for separate container setup)
 conn = psycopg2.connect(
-    host="localhost",
-    port=5432,
-    database="mt5_data",
-    user="tepafril",
-    password="316619AAbbcc**!!"
+    host=os.environ.get("POSTGRES_HOST", "postgres"),
+    port=int(os.environ.get("POSTGRES_PORT", "5432")),
+    database=os.environ.get("POSTGRES_DB", "mt5_data"),
+    user=os.environ.get("POSTGRES_USER", "tepafril"),
+    password=os.environ.get("POSTGRES_PASSWORD", "316619AAbbcc**!!")
 )
 cursor = conn.cursor()
 
