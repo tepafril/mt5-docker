@@ -14,21 +14,16 @@ services:
       - postgres
     networks:
       - mt5_network
-
   postgres:
     image: postgres:16-alpine
-    container_name: postgres
     environment:
-      - POSTGRES_USER=tepafril
-      - POSTGRES_PASSWORD=316619AAbbcc**!!
-      - POSTGRES_DB=mt5_data
+      POSTGRES_USER: tepafril
+      POSTGRES_PASSWORD: 316619AAbbcc**!!
+      POSTGRES_DB: mt5_data
     volumes:
       - postgres_data:/var/lib/postgresql/data
-    ports:
-      - 5432:5432
     networks:
       - mt5_network
-    restart: unless-stopped
 
 volumes:
   postgres_data:
