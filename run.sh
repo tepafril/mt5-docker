@@ -6,6 +6,7 @@ mkdir -p mt5
 
 echo -e "${GREEN}[2/8] Copying docker-compose into mt5...${NC}"
 cp docker-compose.yaml mt5/docker-compose.yaml
+cp Dockerfile.mt5 mt5/Dockerfile.mt5
 
 echo -e "${GREEN}[3/8] Starting containers in detached mode...${NC}"
 cd mt5
