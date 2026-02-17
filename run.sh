@@ -38,7 +38,7 @@ docker exec -it mt5 bash -c "su abc -c 'wine \"C:\Program Files (x86)\Python39-3
 docker exec -it mt5 bash -c "su abc -c 'wine \"C:\Program Files (x86)\Python39-32\python.exe\" -m pip install \"numpy<2\"'"
 
 echo -e "${GREEN}[7/8] Installing numpy<2 and psycopg2-binary for MT5 (Wine Python)...${NC}"
-docker exec -it mt5 bash -c "su abc -c 'wine \"C:\Program Files (x86)\Python39-32\python.exe\" -m pip install pandas'"
+docker exec -it mt5 bash -c "su abc -c 'wine \"C:\Program Files (x86)\Python39-32\python.exe\" -m pip install pandas --only-binary :all:'"
 docker exec -it mt5 bash -c "su abc -c 'wine \"C:\Program Files (x86)\Python39-32\python.exe\" -m pip install psycopg2-binary --only-binary :all:'"
 
 echo -e "${GREEN}[8/8] Restarting container after pip changes...${NC}"
