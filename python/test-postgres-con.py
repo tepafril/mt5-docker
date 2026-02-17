@@ -7,7 +7,7 @@ import pandas as pd
 conn = psycopg2.connect(
     host=os.environ.get("POSTGRES_HOST", "postgres"),
     port=int(os.environ.get("POSTGRES_PORT", "5432")),
-    database=os.environ.get("POSTGRES_DB", "mt5_data"),
+    database=os.environ.get("POSTGRES_DB", "mt5_database"),
     user=os.environ.get("POSTGRES_USER", "tepafril"),
     password=os.environ.get("POSTGRES_PASSWORD", "316619AAbbcc**!!")
 )
