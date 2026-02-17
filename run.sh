@@ -33,11 +33,12 @@ docker exec -it mt5 bash -c "chmod +x /Metatrader/start.sh"
 echo -e "${GREEN}[5/8] Restarting container to run the new start script...${NC}"
 docker restart mt5
 
-echo -e "${GREEN}[6/8] Unnstalling numpy2.*...${NC}"
+echo -e "${GREEN}[6/8] Installing numpy<2 and psycopg2-binary for MT5 (Wine Python)...${NC}"
 docker exec -it mt5 bash -c "su abc -c 'wine \"C:\Program Files (x86)\Python39-32\python.exe\" -m pip uninstall numpy -y'"
+docker exec -it mt5 bash -c "su abc -c 'wine \"C:\Program Files (x86)\Python39-32\python.exe\" -m pip install \"numpy<2\" '"
 
 echo -e "${GREEN}[7/8] Installing numpy<2 and psycopg2-binary for MT5 (Wine Python)...${NC}"
-docker exec -it mt5 bash -c "su abc -c 'wine \"C:\Program Files (x86)\Python39-32\python.exe\" -m pip install \"numpy<2\" psycopg[binary]'"
+docker exec -it mt5 bash -c "su abc -c 'wine \"C:\Program Files (x86)\Python39-32\python.exe\" -m pip install psycopg2-binary --only-binary :all:'"
 
 echo -e "${GREEN}[8/8] Restarting container after pip changes...${NC}"
 docker restart mt5
